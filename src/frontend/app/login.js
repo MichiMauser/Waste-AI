@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, Redirect } from 'expo-router'
 
@@ -19,6 +19,9 @@ const LoginScreen = () => {
 
     return (
         <SafeAreaView style = {{flex:1}}>
+            <View style={{alignItems:'center', marginTop:50}}>
+                <Image source={require('../assets/icoana.jpg')} style={{width: 200, height: 200}} />
+            </View>
 
             <View style={{flex:1,justifyContent:'center'}}>
             <TextInput style = {{backgroundColor:'#FFFFFF', borderWidth:1, borderColor:'black', shadowOpacity:0.05, textAlign:'center',alignContent:'center', width:350, height:50, alignSelf:'center',marginBottom:10,borderRadius: 30}}

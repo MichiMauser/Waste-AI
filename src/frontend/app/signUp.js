@@ -1,6 +1,6 @@
 import {Link} from 'expo-router';
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const signUp = () => {
@@ -15,6 +15,9 @@ const signUp = () => {
 
     return (
         <SafeAreaView style = {{flex:1}}>
+            <View style={{alignItems:'center', marginTop:50}}>
+                <Image source={require('../assets/icoana.jpg')} style={{width: 200, height: 200}} />
+            </View>
             <View style={{flex:1, flexDirection: 'column', justifyContent:'center'}}></View>
             <View style={{flex:1,justifyContent:'center'}}>
             <TextInput style = {{backgroundColor:'#FFFFFF', borderWidth:1, borderColor:'black', textAlign:'center', shadowOpacity:0.05, alignContent:'center', width:350, height:50, alignSelf:'center',borderRadius: 30, marginBottom:10}}
