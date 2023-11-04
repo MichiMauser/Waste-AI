@@ -9,8 +9,36 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        // TODO: Implement login logic
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('https://example.com/oauth/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    grant_type: 'password',
+                    client_id: 'your_client_id',
+                    client_secret: 'your_client_secret',
+                    username: email,
+                    password: password,
+                }).toString(),
+            });
+
+            if (!response.ok) {
+                throw new Error('Invalid email or password');
+            }
+
+            const data = await response.json();
+            const accessToken = data.access_token;
+            const refreshToken = data.refresh_token;
+
+            // TODO: Store tokens securely and use them for subsequent API requests
+
+        } catch (error) {
+            console.error(error);
+            // TODO: Handle error
+        }
     };
     const handleFrogotPass = () => {
         // TODO: Implement forgot password logic
