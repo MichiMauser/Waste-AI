@@ -22,13 +22,13 @@ const LoginScreen = () => {
 
     return (
         <SafeAreaView style = {{flex:1,justifyContent:'center'}}>
-            <TextInput style = {{backgroundColor:'#F2F2F2', borderWidth:1, borderColor:'black', shadowOpacity:0.05, alignContent:'center', width:350, height:50, alignSelf:'center',marginBottom:10}}
+            <TextInput style = {{backgroundColor:'#FFFFFF', borderWidth:1, borderColor:'black', shadowOpacity:0.05, textAlign:'center',alignContent:'center', width:350, height:50, alignSelf:'center',marginBottom:10,borderRadius: 10}}
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
             />
             
-            <TextInput style = {{backgroundColor:'#F2F2F2', borderWidth:1, borderColor:'black', shadowOpacity:0.05, alignContent:'center', width:350, height:50, alignSelf:'center'}}
+            <TextInput style = {{backgroundColor:'#FFFFFF', borderWidth:1, borderColor:'black', textAlign:'center', shadowOpacity:0.05, alignContent:'center', width:350, height:50, alignSelf:'center',borderRadius: 10}}
                 placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
@@ -39,11 +39,11 @@ const LoginScreen = () => {
                     <Text>Forgot Password?</Text>
                 </TouchableOpacity>
             <TouchableOpacity onPress={handleLogin}
-            style = {{alignSelf:'center', backgroundColor:'#D2DE32', padding:10, borderRadius:5, marginTop:10}}>
+            style = {{alignSelf:'center', backgroundColor:'#fbb02d', padding:10, borderRadius:5, marginTop:10}}>
                 <Text style={{color:'white'}}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSignUp}
-            style = {{alignSelf:'center', backgroundColor:'#61A3BA', padding:10, borderRadius:5, marginTop:10}}>
+            style = {{alignSelf:'center', backgroundColor:'#87b38d', padding:10, borderRadius:5, marginTop:10}}>
                 <Text style={{color:'white'}}>SignUp</Text>
             </TouchableOpacity>
 

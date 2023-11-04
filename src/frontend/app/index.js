@@ -7,9 +7,10 @@ const index = () => {
     <View>
       <Text>index</Text>
 
-      <Link href ="/home">Go home</Link>
-        <Link href ="/profile">Go profile</Link>
-        <Link href ="/login">Go login</Link>
+    <Link href ="/home">Go home</Link>
+      <Link href ="/profile">Go profile</Link>
+      <Link href ="/login">Go login</Link>
+      <Link href ="/signUp">Go SignUp</Link>
     </View>
   )
 }
