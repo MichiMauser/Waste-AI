@@ -11,22 +11,10 @@ import { Link, Redirect } from 'expo-router'
             <Image source={require('../assets/icoana.jpg')} style={{ width: 200, height: 200 }} />
           </View>
 
-<<<<<<< HEAD
-    <Link href ="/home">Go home</Link>
-      <Link href ="/scanner">Go Scanner</Link>
-      <Link href ="/login">Go login</Link>
-      <Link href ="/signUp">Go SignUp</Link>
-      <Link href ="/pantry">Go Pantry</Link>
-      <Link href ="/addproduct">Go AddProduct</Link>
-    </View>
-  )
-}
-=======
           <Link href ="/pantry"
           style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:15, borderRadius:30 ,marginTop:10,width:200,textAlign:'center'}}>
             <Text style={{color:'white', alignSelf:'center', textAlign:'center'}}>Pantry</Text>
           </Link>
->>>>>>> 242a5d8a6c4f92a1d9e8bb352e20b80d747a603b
 
           <Link href ="/scanner"
           style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:15, borderRadius:30, marginTop:20,width:200,marginBottom:10,textAlign:'center'}}>

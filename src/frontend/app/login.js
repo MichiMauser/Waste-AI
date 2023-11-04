@@ -4,41 +4,42 @@ import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, Redirect } from 'expo-router'
 
+function postUserLogIn() {
+
+    let formData = new FormData();    //formdata object
+
+    formData.append('username', userName);   //append the values with key, value pair
+    formData.append('password', password);
+
+    axios
+    .post(baseURL+"/token", formData, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    .then((response) => {
+        console.log(response.data);
+        const token = response.data.access_token;
+        const userID = response.data.user_id;
+        console.log(token);
+        console.log(userID);
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("userID", userID);
+
+        setAuthToken(token);
+
+        navigate("/account");
+    }).catch(error => {
+        setError(error);
+        console.log(error.message);
+    });
+}
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
-        try {
-            const response = await fetch('https://example.com/oauth/token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    grant_type: 'password',
-                    client_id: 'your_client_id',
-                    client_secret: 'your_client_secret',
-                    username: email,
-                    password: password,
-                }).toString(),
-            });
-
-            if (!response.ok) {
-                throw new Error('Invalid email or password');
-            }
-
-            const data = await response.json();
-            const accessToken = data.access_token;
-            const refreshToken = data.refresh_token;
-
-            // TODO: Store tokens securely and use them for subsequent API requests
-
-        } catch (error) {
-            console.error(error);
-            // TODO: Handle error
-        }
+        postUserLogIn();
     };
     const handleFrogotPass = () => {
         // TODO: Implement forgot password logic

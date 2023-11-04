@@ -38,7 +38,7 @@ import { Link } from 'expo-router'
           {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
         </View>
         <View style={{paddingTop:40}}>
-        <Link href ="/addManually"
+        <Link href ="/addproduct"
             style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:10, borderRadius:30, marginTop:10,width:200,marginBottom:10,textAlign:'center'}}>
                 <Text style={{color:'white', alignSelf:'center', textAlign:'center'}}>Add manually</Text>
             </Link>
