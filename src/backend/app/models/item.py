@@ -2,6 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Text, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import null
 from app.models.items_products import items_products
+from sqlalchemy.ext.hybrid import hybrid_property
 
 # Import the base model
 from app.repository.base_class import Base
@@ -26,7 +27,12 @@ class Item(Base):
 
     # Relationships
     # The relationship between the item and the user that owns it
-    owners = relationship("User", back_populates="items")
+    owner = relationship("User", back_populates="item")
 
     # The relationship between the item and the products it uses
-    products = relationship("ItemProduct", secondary=items_products, back_populates="items")
+    product = relationship('Product', secondary=items_products, back_populates="item")
+
+    @hybrid_property
+    def id(self):
+        return self.item_id
+

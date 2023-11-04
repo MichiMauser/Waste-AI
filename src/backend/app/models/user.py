@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String,  Interval 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import null
+from sqlalchemy.ext.hybrid import hybrid_property
 
 # Import the base model
 from app.repository.base_class import Base
@@ -25,8 +26,12 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
-    is_superuser = Column(Boolean(), default=False)
+    role = Column(String, default=False)
 
     # Relationships
     # The relationship between the user and the items they own
-    items = relationship("Item", back_populates="owner")
+    item = relationship("Item", back_populates="owner")
+
+    @hybrid_property
+    def id(self):
+        return self.user_id

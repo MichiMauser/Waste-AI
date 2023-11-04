@@ -12,4 +12,3 @@ items_products = Table(
     Column("product_id", Integer, ForeignKey("products.product_id")),
 )
 
-
