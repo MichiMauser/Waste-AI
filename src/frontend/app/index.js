@@ -11,6 +11,7 @@ const index = () => {
       <Link href ="/scanner">Go Scanner</Link>
       <Link href ="/login">Go login</Link>
       <Link href ="/signUp">Go SignUp</Link>
+      <Link href ="/pantry">Go Pantry</Link>
     </View>
   )
 }
