@@ -41,7 +41,7 @@ const AddManuallyScreen = () => {
                     <Text style={{ marginRight: 10 }}>Note:</Text>
                     <TextInput
                         style={{
-                            backgroundColor: '#FFFFFF',
+                            backgroundColor: 'white',
                             borderWidth: 1,
                             borderColor: 'black',
                             textAlign: 'center',
