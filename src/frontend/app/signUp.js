@@ -24,7 +24,6 @@ const signUp = () => {
                 placeholder="Username"
                 value={name}
                 onChangeText={setName}
-                secureTextEntry
             />
             <TextInput style = {{backgroundColor:'#FFFFFF', borderWidth:1, borderColor:'black', shadowOpacity:0.05, textAlign:'center',alignContent:'center', width:350, height:50, alignSelf:'center',marginBottom:10,borderRadius: 30}}
                 placeholder="Email"
