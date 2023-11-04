@@ -47,10 +47,10 @@ const AppBarPantry = () => {
                     >
 
                         <View style={{
-                            position:'absolute',
-                            top:60,
-                            right:0,
+                            alignItems: 'flex-end',
+                            marginTop:80
                         }}>
+                        
                             {items.map((item,index) => (
                                 <TouchableOpacity key={index} onPress={
                                         () => handleItemSelected(item)
