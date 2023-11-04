@@ -29,18 +29,3 @@ services:
     ports:
       - "5432:5432"
     
-  frontend:
-  # frontend container, we are using react-native with expo
-    container_name: frontend
-    build:
-      context: ./frontend/
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./frontend:/code
-    ports:
-      - "19000:19000"
-      - "19001:19001"
-      - "19002:19002"
-    environment:
-      # Set the ip as being the same as the host machine
-      - REACT_NATIVE_PACKAGER_HOSTNAME="localhost"
