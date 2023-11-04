@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import * as Constants from './constants';
+import { Link } from 'expo-router';
 
 const ProductText = ({ productName, type, expirationDate }) => {
 
@@ -13,14 +14,16 @@ const ProductText = ({ productName, type, expirationDate }) => {
         borderColor = '#A85353';
     }
   return (
-    <View style={{marginVertical: 15,
-    borderWidth:3, marginHorizontal:30, paddingVertical:10,
-    borderRadius:30, borderColor: borderColor}}>
-        <View style={{paddingHorizontal:20, flexDirection: 'row', justifyContent:'space-between'}}>
-            <Text>{productName}</Text>
-            <Text>{expirationDate}</Text>
+        <View style={{marginVertical: 15,
+        borderWidth:3, marginHorizontal:30, paddingVertical:10,
+        borderRadius:30, borderColor: borderColor}}> 
+            <Link href='/productdescription'>
+                <View style={{paddingHorizontal:20, flexDirection: 'row', justifyContent:'space-between'}}>
+                    <Text>{productName}</Text>
+                    <Text>{expirationDate}</Text>
+                </View>
+            </Link>
         </View>
-    </View>
   );
 };
 
