@@ -13,4 +13,4 @@ export default profile
 
 const styles = StyleSheet.create({})
 
-////rnfes rezolva tot
+////rnfes rezolva totul
