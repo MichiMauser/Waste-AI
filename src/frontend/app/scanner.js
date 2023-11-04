@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, Button } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Link } from 'expo-router'
 
   export default function scanner() {
     const [hasPermission, setHasPermission] = useState(null);
@@ -36,8 +37,11 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
           />
           {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
         </View>
-        <View style={styles.buttonContainer}>
-          <Button title="Add manualy" onPress={() => console.log('Button pressed')} />
+        <View style={{paddingTop:40}}>
+        <Link href ="/signUp"
+            style = {{alignSelf:'center', backgroundColor:'#87b38d', padding:10, borderRadius:30, marginTop:10,width:200,marginBottom:10,textAlign:'center'}}>
+                <Text style={{color:'white', alignSelf:'center', textAlign:'center'}}>Add manually</Text>
+            </Link>
         </View>
       </View>
     );
@@ -53,11 +57,6 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
       height: 200,
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    buttonContainer: {
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      marginTop: 50,
     },
   });
 
