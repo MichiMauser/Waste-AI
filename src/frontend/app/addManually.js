@@ -17,7 +17,7 @@ const AddManuallyScreen = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, justifyContent: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
-                    <Text style={{ marginRight: 10 }}>Name:</Text>
+           
                     <TextInput
                         style={{
                             backgroundColor: '#FFFFFF',
@@ -38,7 +38,7 @@ const AddManuallyScreen = () => {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent:'center' }}>
-                    <Text style={{ marginRight: 10 }}>Note:</Text>
+                    
                     <TextInput
                         style={{
                             backgroundColor: 'white',
