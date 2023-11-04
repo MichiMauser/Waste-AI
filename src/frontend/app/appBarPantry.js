@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ImageBackground, TouchableOpacity, Text, Modal } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, Text, Modal, Image} from 'react-native';
 import { Link,  } from 'expo-router'
 
 const AppBarPantry = () => {
@@ -21,7 +21,7 @@ const AppBarPantry = () => {
         <View style={{flexDirection:'row', justifyContent:'space-between', borderRadius:30, backgroundColor: '#DE0C0C', alignItems:'center', marginHorizontal:1 }}>
                 <Link href="/" style={{marginLeft:10, marginVertical:10}}>
                     <View style={{borderRadius:100, backgroundColor:'black', width:50, height:50, borderRadius:100 }}>
-                        <ImageBackground source={require('./backIcon.png')} resizeMode="cover"
+                        <ImageBackground source={require('../assets/backIcon.png')} resizeMode="cover"
                         style={{flex:1, justifyContent:'center'}}/>
                     </View>
                 </Link>
