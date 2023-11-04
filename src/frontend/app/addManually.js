@@ -62,7 +62,7 @@ const AddManuallyScreen = () => {
                     onPress={handleAdd}
                     style={{
                         alignSelf: 'center',
-                        backgroundColor: '#fbb02d',
+                        backgroundColor: '#DE0C0C',
                         padding: 10,
                         borderRadius: 30,
                         marginTop: 10,

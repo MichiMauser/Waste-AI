@@ -38,11 +38,11 @@ const LoginScreen = () => {
                     <Text style={{fontSize:16}}>Forgot Password?</Text>
                 </TouchableOpacity>
             <TouchableOpacity onPress={handleLogin}
-            style = {{alignSelf:'center', backgroundColor:'#fbb02d', padding:10, borderRadius:30, marginTop:10,width:200}}>
+            style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:10, borderRadius:30, marginTop:10,width:200}}>
                 <Text style={{color:'white', alignSelf:'center'}}>Login</Text>
             </TouchableOpacity>
             <Link href ="/signUp"
-            style = {{alignSelf:'center', backgroundColor:'#87b38d', padding:10, borderRadius:30, marginTop:10,width:200,marginBottom:10,textAlign:'center'}}>
+            style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:10, borderRadius:30, marginTop:10,width:200,marginBottom:10,textAlign:'center'}}>
                 <Text style={{color:'white', alignSelf:'center', textAlign:'center'}}>SignUp</Text>
             </Link>
             </View>

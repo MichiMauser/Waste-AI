@@ -36,7 +36,7 @@ const signUp = () => {
                 secureTextEntry
             />
             <TouchableOpacity onPress={handleSignUp}
-            style = {{alignSelf:'center', backgroundColor:'#87b38d', padding:10, width:200, borderRadius:30, marginTop:10}}>
+            style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:10, width:200, borderRadius:30, marginTop:10}}>
                 <Text style={{color:'white',alignSelf:'center'}}>SignUp</Text>
             </TouchableOpacity>
             </View>
