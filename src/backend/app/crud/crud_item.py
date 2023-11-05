@@ -1,6 +1,7 @@
 from typing import Any, Dict, Optional, Union
 
 from sqlalchemy.orm import Session
+from datetime import date
 
 from app.core.security import get_password_hash, verify_password
 from app.crud.base import CRUDBase
@@ -11,8 +12,12 @@ from app.schemas.item import ItemCreate, ItemUpdate
 class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
 
     def create(self, db: Session, *, obj_in: ItemCreate, owner_id: int) -> Item:
+        date_of_expiry = obj_in.date_of_expiry
+        # Parse the date of expiry
+        date_of_expiry = date_of_expiry.split('-')
+        date_of_expiry = date(int(date_of_expiry[0]), int(date_of_expiry[1]), int(date_of_expiry[2]))
         db_obj = Item(
-            date_of_expiry=obj_in.date_of_expiry,
+            date_of_expiry=date_of_expiry,
             notes=obj_in.notes,
             owner_id=owner_id,
         )

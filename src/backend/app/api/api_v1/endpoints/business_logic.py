@@ -9,6 +9,7 @@ from app import crud, models, schemas
 from app.api import deps
 from app.core.config import settings
 from app.models.items_products import items_products
+from datetime import date
 #from app.utils import send_new_account_email
 
 router = APIRouter()
@@ -58,7 +59,7 @@ def find_product(
     return product
 
 # Get all the products of the current user
-@router.get('/get_items', response_model=schemas.Item)
+@router.get('/get_items', response_model=List[schemas.Item])
 def get_items(
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_active_user),
@@ -80,6 +81,20 @@ def add_item(
     Add new item.
     """
 
+    # Validate the date of expiry
+    date_of_expiry = item_in.date_of_expiry
+    # Parse the date of expiry
+    date_of_expiry = date_of_expiry.split('-')
+    try:
+        date_of_expiry = date(int(date_of_expiry[0]), int(date_of_expiry[1]), int(date_of_expiry[2]))
+        # Check if the date of expiry is in the future
+        if date_of_expiry < date.today():
+            raise ValueError
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid date of expiry"
+        )
     # Check if the product exists in the database
     product = crud.product.get_by_ean(db, ean=item_in.product_ean)
     if not product:
@@ -92,10 +107,7 @@ def add_item(
     item = crud.item.create(db=db, obj_in=item_in, owner_id=current_user.id)
     
     # Create the relationship between the item and the product
-    product_id = crud.product.get_by_ean(db, ean=item_in.ean).id
-
-    # Add the item product relationship to the database
-    crud.items_products.create(db=db, item_id=item.id, product_id=product_id)
+    product_id = crud.product.get_by_ean(db, ean=item_in.product_ean).id
 
     # Add the item product relationship to the database
     db.execute(items_products.insert().values(item_id=item.id, product_id=product_id))
@@ -118,7 +130,7 @@ def delete_item(
             status_code=404,
             detail="The item doesn't exist in the database"
         )
-    if item.user_id != current_user.id or current_user.role != "admin":
+    if item.owner_id != current_user.id or current_user.role != "admin":
         raise HTTPException(
             status_code=400,
             detail="The user doesn't have enough privileges"

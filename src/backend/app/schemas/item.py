@@ -1,5 +1,8 @@
 from typing import Any, Dict, Optional, Union
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
+from datetime import datetime, date
+
+
 
 class ItemBase(BaseModel):
     owner_id: Optional[int] = None
@@ -25,4 +28,4 @@ class ItemInDB(ItemInDBBase):
     pass
 
 class Item(ItemInDBBase):
-    pass
+    date_of_expiry: date
