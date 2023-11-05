@@ -50,6 +50,11 @@ def find_product(
     # Check if the product exists in the database
     # if it doesn't exist, search for it in the external API (TODO)
     if not product:
+        # Search for the product in the external API
+        
+        # If it exists, add it to the database
+        
+        # If it doesn't exist, return an error
         raise HTTPException(
             status_code=404,
             detail="The product doesn't exist in the database"
@@ -135,5 +140,19 @@ def delete_item(
             status_code=400,
             detail="The user doesn't have enough privileges"
         )
+    
     item = crud.item.remove(db=db, id=item_id)
     return item
+
+# Enpoint to post requests to the ChatGPT API (can be adapted to use other LLMs)
+@router.post('/chat', response_model=schemas.Msg)
+def chat(
+    *,
+    db: Session = Depends(deps.get_db),
+    msg_in: str,
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    """
+    Chat with the ChatGPT API.
+    """
+    pass
