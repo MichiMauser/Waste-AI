@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, Redirect } from 'expo-router';
+import { Link, Redirect, router } from 'expo-router';
 import axios from 'axios';
 // Async storage for react native
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -33,15 +33,20 @@ const LoginScreen = () => {
         });
 
         console.log('Login response:', response.data);
-        
 
         await AsyncStorage.setItem('access_token', response.data.access_token);
-
+        if(response.status === 200) {
+          console.log('Login successful');
+          router.replace('/');
+          }
     
         } catch (error) {
         console.error('Login error:', error);
         setError('Login failed. Please check your credentials.');
+        console.log(error.response);
         }
+        
+        
   };
 
 
