@@ -37,7 +37,7 @@ const AppBarPantry = () => {
         },
       });
       console.log(response.data);
-      setProducts(response.data);
+      set(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
     }

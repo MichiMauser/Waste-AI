@@ -8,35 +8,34 @@ import { authorize } from 'react-native-app-auth';
 const SERVER_ADDRESS = 'http://192.168.1.24:8000';
 
 const RecipesScreen = () => {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
 
   const getToken = async () => {
     const token = await AsyncStorage.getItem('access_token');
     return token;
   };
 
-  const callApi = async () => {
-    try {
-      if(newMessage.trim != '') {
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
 
-        promptMsg = {
-          "msg_in": newMessage 
-        };
-        var authorize = `Bearer ${getToken()}`;
-        console.log(authorize);
-        const response = await axios.post(`${SERVER_ADDRESS}/api/v1/chat`, promptMsg, {
-          'Authorization': authorize,
-          "Content-Type" : "application/json"
-        })
-        console.log(response.data)
-        
-      }
-    }catch (error) {
-      console.error('Login error:', error);
-      console.log(error.response);
-    }
-  }
+
+  const callApi = async () => {
+
+    const message = newMessage;
+    const data = JSON.stringify({
+      msg: message,
+    });
+
+    const response = await axios.post(`${SERVER_ADDRESS}/api/v1/chat`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log(response.data);
+    setMessages([...messages, response.data['msg']]);
+    
+  };
+
   const addMessage = () => {
     if (newMessage.trim() !== '') {
       setMessages([...messages, newMessage]);
@@ -44,32 +43,6 @@ const RecipesScreen = () => {
       setAsked(true);
     }
   };
-
-  function getInput() {
-      if(!asked) {
-        return (
-          <View style = {{flexDirection:'row', alignContent:'center'}}>
-            <TextInput
-              style={{height: 40, flex: 1,
-                      borderColor: 'gray',
-                      borderWidth: 1,
-                      borderRadius:30,
-                      paddingHorizontal: 10,
-                      paddingVertical: 5,
-                      margin: 10,}}
-              placeholder="Add a new message"
-              onChangeText={(text) => setNewMessage(text)}
-              value={newMessage}
-            />
-            <TouchableOpacity style={{margin:10, backgroundColor:'#016AD2', borderRadius: 30, paddingHorizontal:20, paddingVertical:10}} onPress={
-                 addMessage
-              }>
-              <Text>Ask</Text>
-            </TouchableOpacity>
-          </View>
-        )
-      }
-  }
   return (
     <SafeAreaView style={{flex:1}}>
       <View style = {{flex:1, justifyContent:'space-between'}}>
@@ -104,8 +77,8 @@ const RecipesScreen = () => {
               onChangeText={(text) => setNewMessage(text)}
               value={newMessage}
             />
-            <TouchableOpacity style={{margin:10, backgroundColor:'#016AD2', borderRadius: 30, paddingHorizontal:20, paddingVertical:10}} onPress= {
-                 callApi
+            <TouchableOpacity style={{margin:10, backgroundColor:'#016AD2', borderRadius: 30, paddingHorizontal:20, paddingVertical:10}} onPress={
+                callApi
               }>
               <Text>Ask</Text>
             </TouchableOpacity>
