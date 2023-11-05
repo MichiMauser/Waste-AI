@@ -4,12 +4,16 @@ from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload
 
 from app import crud, models, schemas
 from app.api import deps
 from app.core.config import settings
 from app.models.items_products import items_products
 from datetime import date
+import os
+import openai
+import random
 #from app.utils import send_new_account_email
 
 router = APIRouter()
@@ -64,7 +68,7 @@ def find_product(
     return product
 
 # Get all the products of the current user
-@router.get('/get_items', response_model=List[schemas.Item])
+@router.get('/get_items', response_model=List[schemas.ItemWithProduct])
 def get_items(
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_active_user),
@@ -73,7 +77,26 @@ def get_items(
     Get all items.
     """
     items = crud.item.get_all_by_user(db, user_id=current_user.id)
-    return items
+    # Get then names of the products of the items from the products table
+    return_items = []
+    for item in items:
+        # Items and products have a many to many relationship
+        # Join the items and products tables
+        products = db.query(models.Product) \
+                    .join(items_products) \
+                    .filter(items_products.c.item_id == item.id) \
+                    .first()
+
+        return_items.append({
+            "owner_id": item.owner_id,
+            "item_id": item.id,
+            "date_of_expiry": item.date_of_expiry,
+            "notes": item.notes,
+            "products": products,
+        })
+        
+
+    return return_items
 
 @router.post('/add_item', response_model=schemas.Item)
 def add_item(
@@ -116,6 +139,7 @@ def add_item(
 
     # Add the item product relationship to the database
     db.execute(items_products.insert().values(item_id=item.id, product_id=product_id))
+    db.commit()
 
     return item
 
@@ -149,10 +173,52 @@ def delete_item(
 def chat(
     *,
     db: Session = Depends(deps.get_db),
-    msg_in: str,
-    current_user: models.User = Depends(deps.get_current_active_user),
+    msg_in: schemas.Msg,
+    #current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Chat with the ChatGPT API.
     """
-    pass
+    openai.api_key = os.environ.get("OPENAI_API_KEY")
+
+    # Get all the items of the current user from the database
+    #items = crud.item.get_all_by_user(db, user_id=current_user.id)
+    items = crud.item.get_all_by_user(db, user_id=11)
+    # Get then names of the products of the items from the products table
+    product_names = []
+    for item in items:
+        # Items and products have a many to many relationship
+        # Join the items and products tables
+        products = db.query(models.Product) \
+                    .join(items_products) \
+                    .filter(items_products.c.item_id == item.id) \
+                    .first()
+        product_names.append(products.name)
+    product_names = " ".join(product_names)
+    
+    # Create the prompt
+    prompt = [
+        {
+            "role": "system",
+            "content": "You are a master chef that is creating custom recipes for people. You are using their ingredients, but only the ones that work together. You don't need to use all of them!"
+        }
+    ]
+
+    # Add the user's ingredients to the prompt
+    msg_in.msg += f" using  some of these ingredients list:'{product_names}' you don't need to use all of them (just use the ones that work together, you are a master chef after all)" 
+    prompt.append({
+        "role": "user",
+        "content": msg_in.msg
+    })
+
+    # Create the prompt
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=prompt,
+    )
+
+    # Get the response
+    response = completion.choices[0].message["content"]
+    return {"msg": response}
+
+    

@@ -1,6 +1,7 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, List
 from pydantic import BaseModel, validator
 from datetime import datetime, date
+from app.schemas.product import Product
 
 
 
@@ -28,4 +29,11 @@ class ItemInDB(ItemInDBBase):
     pass
 
 class Item(ItemInDBBase):
+    item_id: int
     date_of_expiry: date
+
+class ItemWithProduct(Item):
+    products: Product = None 
+
+    class Config:
+        orm_mode = True
