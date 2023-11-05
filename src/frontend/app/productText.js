@@ -27,4 +27,4 @@ const ProductText = ({ productName, type, expirationDate }) => {
   );
 };
 
-export default ProductText;
+export default ProductText;        
