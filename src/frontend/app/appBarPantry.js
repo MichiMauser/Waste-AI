@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { View, ImageBackground, TouchableOpacity, Text, Modal, SafeAreaView } from 'react-native';
 import { Link,  } from 'expo-router'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+const SERVER_ADDRESS = 'http://192.168.1.24:8000';
 
 const AppBarPantry = () => {
+
+    const getToken = async () => {
+        const token = await AsyncStorage.getItem('access_token');
+        return token;
+    }
+    const getItems = async () => {
+        const auth = `Bearer ${await getToken()}`;
+        console.log("Token is this: ", auth);
+        const response = await axios.get(`${SERVER_ADDRESS}/api/v1/get_items`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': auth
+            },
+        });
+        console.log(response.data);
+    }
+    getItems();
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);

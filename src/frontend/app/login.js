@@ -5,6 +5,7 @@ import { Link, Redirect, router } from 'expo-router';
 import axios from 'axios';
 // Async storage for react native
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { access } from 'fs';
 
 const SERVER_ADDRESS = 'http://192.168.1.24:8000'; // Replace with your server's address
 
@@ -32,9 +33,9 @@ const LoginScreen = () => {
         },
         });
 
-        console.log('Login response:', response.data);
 
         await AsyncStorage.setItem('access_token', response.data.access_token);
+        console.log(response.data.access_token);
         if(response.status === 200) {
           console.log('Login successful');
           router.replace('/home');
