@@ -1,20 +1,136 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
+import React, { useState } from 'react';
+import { View, Text, SafeAreaView, FlatList, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import AppBarRecipes from './appBarRecipes';
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { authorize } from 'react-native-app-auth';
 
-const recipes = () => {
+const SERVER_ADDRESS = 'http://192.168.1.24:8000';
+
+const RecipesScreen = () => {
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+
+  const getToken = async () => {
+    const token = await AsyncStorage.getItem('access_token');
+    return token;
+  };
+
+  const callApi = async () => {
+    try {
+      if(newMessage.trim != '') {
+
+        promptMsg = {
+          "msg_in": newMessage 
+        };
+        var authorize = `Bearer ${getToken()}`;
+        console.log(authorize);
+        const response = await axios.post(`${SERVER_ADDRESS}/api/v1/chat`, promptMsg, {
+          'Authorization': authorize,
+          "Content-Type" : "application/json"
+        })
+        console.log(response.data)
+        
+      }
+    }catch (error) {
+      console.error('Login error:', error);
+      console.log(error.response);
+    }
+  }
+  const addMessage = () => {
+    if (newMessage.trim() !== '') {
+      setMessages([...messages, newMessage]);
+      setNewMessage('');
+      setAsked(true);
+    }
+  };
+
+  function getInput() {
+      if(!asked) {
+        return (
+          <View style = {{flexDirection:'row', alignContent:'center'}}>
+            <TextInput
+              style={{height: 40, flex: 1,
+                      borderColor: 'gray',
+                      borderWidth: 1,
+                      borderRadius:30,
+                      paddingHorizontal: 10,
+                      paddingVertical: 5,
+                      margin: 10,}}
+              placeholder="Add a new message"
+              onChangeText={(text) => setNewMessage(text)}
+              value={newMessage}
+            />
+            <TouchableOpacity style={{margin:10, backgroundColor:'#016AD2', borderRadius: 30, paddingHorizontal:20, paddingVertical:10}} onPress={
+                 addMessage
+              }>
+              <Text>Ask</Text>
+            </TouchableOpacity>
+          </View>
+        )
+      }
+  }
   return (
-    <View>
-      <Text>recipes</Text>
+    <SafeAreaView style={{flex:1}}>
+      <View style = {{flex:1, justifyContent:'space-between'}}>
+        <AppBarRecipes />
 
-    <Link href ="/home">Go home</Link>
-      <Link href ="/scanner">Go Scanner</Link>
-      <Link href ="/login">Go login</Link>
-      <Link href ="/signUp">Go SignUp</Link>
-      <Link href ="/pantry">Go Pantry</Link>
-    </View>
-  )
-}
+        <View style={{flex:1, alignContent:'flex-end', marginTop:20}}>
+          <FlatList
+            data={messages}
+            renderItem={({ item }) => (
+              <Text style={{fontSize: 16,
+                borderRadius:30,
+                color: 'black',
+                borderWidth: 1,
+                borderColor:'#A9A9A9',
+                marginVertical: 5,
+                paddingVertical: 5,  paddingHorizontal: 10, marginHorizontal: 7}}>{item}</Text>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        
+        <View style = {{flexDirection:'row', alignContent:'center'}}>
+            <TextInput
+              style={{height: 40, flex: 1,
+                      borderColor: 'gray',
+                      borderWidth: 1,
+                      borderRadius:30,
+                      paddingHorizontal: 10,
+                      paddingVertical: 5,
+                      margin: 10,}}
+              placeholder="Add a new message"
+              onChangeText={(text) => setNewMessage(text)}
+              value={newMessage}
+            />
+            <TouchableOpacity style={{margin:10, backgroundColor:'#016AD2', borderRadius: 30, paddingHorizontal:20, paddingVertical:10}} onPress= {
+                 callApi
+              }>
+              <Text>Ask</Text>
+            </TouchableOpacity>
+        </View>
 
-export default recipes
+      </View>
+    </SafeAreaView>
+  );
+};
 
+const styles = StyleSheet.create({
+  messageText: {
+    fontSize: 16,
+    color: 'black',
+    borderWidth: 1,
+    marginVertical: 5,
+    padding: 5,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 5,
+    margin: 10,
+  },
+});
+
+export default RecipesScreen;
