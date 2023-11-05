@@ -3,7 +3,8 @@ import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, Redirect } from 'expo-router';
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
+// Async storage for react native
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SERVER_ADDRESS = 'http://192.168.1.24:8000'; // Replace with your server's address
 
@@ -30,33 +31,19 @@ const LoginScreen = () => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         });
+
+        console.log('Login response:', response.data);
         
 
-        await AsyncStorage.setItem('access_token', access_token);
+        await AsyncStorage.setItem('access_token', response.data.access_token);
 
-        // Make an authenticated API request with the access token
-        makeAuthenticatedRequest(access_token);
+    
         } catch (error) {
         console.error('Login error:', error);
         setError('Login failed. Please check your credentials.');
         }
   };
 
-  const makeAuthenticatedRequest = async (accessToken) => {
-    try {
-      const response = await axios.get(`${SERVER_ADDRESS}/api/v1/some-protected-endpoint`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      // Handle the response from the protected endpoint
-      console.log('Response from protected endpoint:', response.data);
-    } catch (error) {
-      console.error('Authenticated request error:', error);
-      // Handle the error, e.g., token expiration or unauthorized access
-    }
-  };
 
   const handleFrogotPass = () => {
     // TODO: Implement forgot password logic
