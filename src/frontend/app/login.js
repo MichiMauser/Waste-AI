@@ -37,7 +37,7 @@ const LoginScreen = () => {
         await AsyncStorage.setItem('access_token', response.data.access_token);
         if(response.status === 200) {
           console.log('Login successful');
-          router.replace('/');
+          router.replace('/home');
           }
     
         } catch (error) {
