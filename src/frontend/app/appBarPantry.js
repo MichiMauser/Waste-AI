@@ -23,6 +23,7 @@ const AppBarPantry = () => {
         console.log(response.data);
     }
     getItems();
+    
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -40,7 +41,7 @@ const AppBarPantry = () => {
     return (
         <SafeAreaView>
             <View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor: '#DE0C0C', alignItems:'center', paddingVertical:10}}>
-                <Link href="/" style={{marginLeft:10, marginVertical:10}}>
+                <Link href="/home" style={{marginLeft:10, marginVertical:10}}>
                     <View style={{borderRadius:100, backgroundColor:'transparent', width:30, height:30, borderRadius:100 }}>
                         <ImageBackground source={require('../assets/arrow.png')} resizeMode="contain"
                         style={{flex:1, justifyContent:'center'}}/>
