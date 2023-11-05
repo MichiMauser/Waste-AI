@@ -25,7 +25,7 @@ const AddProduct = () => {
                 <View style={{flexDirection:'row', alignItems:'center', marginBottom:20, justifyContent:'space-between'}}>
                     <Text style={{fontSize:18}}>Name:</Text>
                     <TextInput style={{backgroundColor:"#EEE2E2", borderRadius:30,
-                    paddingVertical:10, paddingHorizontal:50, fontSize:18, textAlign:'center'}}
+                    paddingVertical:10, width:200, fontSize:18, textAlign:'center'}}
                         placeholder="Insert Name..."
                         value={name}
                         onChange={setName}
@@ -34,7 +34,7 @@ const AddProduct = () => {
                 <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', marginBottom:20}}>
                     <Text style={{fontSize:18}}>User note:</Text>
                     <TextInput style={{backgroundColor:"#EEE2E2", borderRadius:30,
-                    paddingVertical:10, paddingHorizontal:50, fontSize:18, textAlign:'center'}}
+                    paddingVertical:10, width:200, fontSize:18, textAlign:'center'}}
                         placeholder="Insert Note..."
                         value={note}
                         onChange={setNote}

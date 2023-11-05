@@ -35,6 +35,11 @@ import { Link, Redirect } from 'expo-router'
           style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:15, borderRadius:30, marginTop:10,width:200,marginBottom:250,textAlign:'center'}}>
             <Text style={{color:'white', alignSelf:'center', textAlign:'center'}}>Login</Text>
           </Link>
+
+          <Link href ="/home"
+          style = {{alignSelf:'center', backgroundColor:'#DE0C0C', padding:15, borderRadius:30, marginTop:10,width:200,marginBottom:250,textAlign:'center'}}>
+            <Text style={{color:'white', alignSelf:'center', textAlign:'center'}}>Home</Text>
+          </Link>
       </SafeAreaView>
       );
     };
