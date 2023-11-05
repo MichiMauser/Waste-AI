@@ -6,7 +6,7 @@ const AppBarAddProduct = () => {
 
 
     return (
-        <View style={{flexDirection:'row', justifyContent:'flex-start', backgroundColor: '#DE0C0C', alignItems:'center', marginHorizontal:1, paddingVertical:10 }}>
+        <View style={{flexDirection:'row', justifyContent:'flex-start', backgroundColor: '#DE0C0C', alignItems:'center', paddingVertical:10 }}>
             <Link href="/pantry" style={{marginLeft:10, marginVertical:10, marginRight:45}}>
                     <View style={{borderRadius:100, backgroundColor:'transparent', width:30, height:30, borderRadius:100 }}>
                         <ImageBackground source={require('../assets/arrow.png')} resizeMode="contain"
