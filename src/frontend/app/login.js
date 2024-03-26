@@ -16,6 +16,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
+      router.replace('/home');
         // Make aplication/x-www-form-urlencoded string from input data
         // grant_type=password 
         // username={username}
